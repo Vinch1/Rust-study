@@ -60,8 +60,56 @@ fn main() {
     // let s2 = s1; // transfer ownership of s1 to s2
     // use '&' to borrow
     let mut x = 5;
-    let y = &mut x; // borrow x
-    *y += 1;
+    {
+        let y = &mut x; // borrow x
+        *y += 1;
+        println!("The value of y is: {}", y);
+    } // y goes out of scope here, mutable borrow ends
+    println!("The value of x is: {}", x);
+
+    let mut account = BankAccount {
+        account_number: "123456789".to_string(),
+        balance: 5000.0,
+    };
+    // immutable to Borrowing the account to check balance
+    account.check_balance();
+    // mutable to Borrowing the account to withdraw money
+    account.withdraw(690.69);
+    account.check_balance();
+
+    // Constants
+    const Y: u32 = 100;
+    println!("The value of Y is: {}", Y);
+    println!("The value of PI is: {}", PI);
+
+    // Shadowing
+    let x = 5;
+    let x = x + 1; // shadows the previous x
+    {
+        let x = x * 2; // shadows the previous x again
+        println!("The value of shadowed x in inner scope is: {}", x);
+    }
+    println!("The value of shadowed x is: {}", x);
+
+    
+}
+
+const PI: f64 = 3.14159;
+
+struct BankAccount {
+    account_number: String,
+    balance: f64,
+}
+
+impl BankAccount {
+    fn withdraw(&mut self, amount: f64) { // takes a mutable reference to self not Ownership
+        println!("Withdrawing ${} from account {}", amount, self.account_number);
+        self.balance -= amount;
+    }
+
+    fn check_balance(&self) {
+        println!("The balance for account {} is ${}", self.account_number, self.balance);
+    }
 }
 
 fn calculate_length(s: &String) -> usize {
