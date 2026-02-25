@@ -245,7 +245,7 @@ fn main() {
         Option::None => println!("Error: Division by zero is not allowed."),
     }
     // approach 2
-    enum Result<T, E> { // Define the generic Result type
+    enum Result<T, E> { // Define the generic Result type | also built-in
         Ok(T), // Represents a successful value
         Err(E), // Represents an error value
     }
