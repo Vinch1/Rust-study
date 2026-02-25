@@ -1,3 +1,7 @@
+#![allow(warnings)]
+
+use std::result;
+
 fn main() {
     hello_word();
     // let e:i32 = 100;
@@ -91,7 +95,70 @@ fn main() {
     }
     println!("The value of shadowed x is: {}", x);
 
-    
+    //control flow
+    let age: u32 = 18;
+    if age >= 18 {
+        println!("You are an adult.");
+    } else {
+        println!("You are a minor.");
+    }
+    let number = 7;
+    if number % 4 == 0 {
+        println!("{} is divisible by 4.", number);
+    } else if number % 2 == 0 {
+        println!("{} is divisible by 2 but not by 4.", number);
+    } else {
+        println!("{} is not divisible by 2 or 4.", number);
+    }
+
+    let condition = true;
+    let number = if condition { 5 } else { 10 };
+    println!("number is: {}", number);
+
+    // Loops
+    // loop{
+    //     println!("This will loop forever!");
+    // }
+    let mut counter = 0;
+    let result = loop {
+        counter += 1;
+        if counter == 10 {
+            break counter * 2; // return value from loop
+        }
+    };
+    println!("The result from the loop is: {result}");
+
+    let mut count = 0;
+    'counting_up: loop { // label
+        println!("count = {count}");
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining = {remaining}");
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("End count = {count}");
+
+    let mut number = 3;
+    while number != 0 {
+        println!("{number}!");
+        number -= 1;
+    }
+    println!("LIFTOFF!!!");
+
+    let a = [10, 20, 30, 40, 50];
+    for element in a {
+        println!("the element is: {element}");
+    }
 }
 
 const PI: f64 = 3.14159;
@@ -102,13 +169,20 @@ struct BankAccount {
 }
 
 impl BankAccount {
-    fn withdraw(&mut self, amount: f64) { // takes a mutable reference to self not Ownership
-        println!("Withdrawing ${} from account {}", amount, self.account_number);
+    fn withdraw(&mut self, amount: f64) {
+        // takes a mutable reference to self not Ownership
+        println!(
+            "Withdrawing ${} from account {}",
+            amount, self.account_number
+        );
         self.balance -= amount;
     }
 
     fn check_balance(&self) {
-        println!("The balance for account {} is ${}", self.account_number, self.balance);
+        println!(
+            "The balance for account {} is ${}",
+            self.account_number, self.balance
+        );
     }
 }
 
