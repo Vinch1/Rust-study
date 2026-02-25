@@ -189,6 +189,81 @@ fn main() {
     let origin = Point(0, 0, 0);
 
     // enum
+    enum IpAddrKind {
+        V4,
+        V6,
+    }
+    let four = IpAddrKind::V4;
+    let six = IpAddrKind::V6;
+    fn route(ip_kind: IpAddrKind) {
+        
+    }
+    route(IpAddrKind::V4);
+    route(IpAddrKind::V6);
+
+    enum IpAddr {
+        V4(u8, u8, u8, u8),
+        V6(String),
+    }
+    // let home = IpAddr::V4(String::from("127.0.0.1"));
+    // let loopback = IpAddr::V6(String::from("::1"));
+
+    //enhanced enum
+    let home = IpAddr::V4(127, 0, 0, 1);
+    let loopback = IpAddr::V6(String::from("::1"));
+    // using struct
+    // struct IpAddr {
+    //     kind: IpAddrKind,
+    //     address: String,
+    // }
+    // let home = IpAddr {
+    //     kind: IpAddrKind::V4,
+    //     address: String::from("127.0.0.1"),
+    // };
+    // let loopback = IpAddr {
+    //     kind: IpAddrKind::V6,
+    //     address: String::from("::1"),
+    // };
+
+    // Error handeling
+    // approach 1 | it actually has buit-in Option, to need to define a costum one.
+    enum Option<T> { //Define the gineric Option type
+        Some(T), // Represents a value
+        None, // Represents the absence of a value
+    }
+
+    fn divide_option(numerator: f64, denominator: f64) -> Option<f64> {
+        if denominator == 0.0 {
+            Option::None // Return None if division by zero
+        } else {
+            Option::Some(numerator / denominator) // Return the result wrapped in Some
+        }
+    }
+    let result = divide_option(10.0, 2.0);
+    match result {
+        Option::Some(value) => println!("The result is: {}", value),
+        Option::None => println!("Error: Division by zero is not allowed."),
+    }
+    // approach 2
+    enum Result<T, E> { // Define the generic Result type
+        Ok(T), // Represents a successful value
+        Err(E), // Represents an error value
+    }
+    fn divide_result(numerator: f64, denominator: f64) -> Result<f64, String> {
+        if denominator == 0.0 {
+            Result::Err(String::from("Division by zero is not allowed"))
+        } else {
+            Result::Ok(numerator / denominator)
+        }
+    }
+    let result = divide_result(10.34, 0.0);
+    match result {
+        Result::Ok(value) => println!("The result is: {}", value),
+        Result::Err(error) => println!("Error: {}", error),
+    }
+
+
+
 }
 
 struct Book {
@@ -204,8 +279,6 @@ struct User{
     email: String,
     sign_in_count: u64,
 }
-    
-    
     
 const PI: f64 = 3.14159;
 
