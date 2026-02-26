@@ -35,12 +35,11 @@ fn main() {
     ];
     println!("Book Slices: {:?}", book_slices);
 
-    
     // Strings Vs String slices &str
     let mut stone_cold: String = String::from("hell");
     stone_cold.push_str(" yeah! on heap");
     println!("stone cold says: {}", stone_cold);
-    
+
     // &str in stack, reference
     let string: String = String::from("HEllo, world!");
     let slice: &str = &string[0..5];
@@ -57,7 +56,7 @@ fn main() {
     println!("The sum of y is: {}", y);
     //call BMI fn
     println!("The BMI is: {:.2}", calculate_bmi(79.0, 1.82));
-    
+
     // Ownership and borrowing
     let s1 = String::from("Rust");
     let len = calculate_length(&s1);
@@ -71,7 +70,7 @@ fn main() {
         println!("The value of y is: {}", y);
     } // y goes out of scope here, mutable borrow ends
     println!("The value of x is: {}", x);
-    
+
     let mut account = BankAccount {
         account_number: "123456789".to_string(),
         balance: 5000.0,
@@ -81,12 +80,12 @@ fn main() {
     // mutable to Borrowing the account to withdraw money
     account.withdraw(690.69);
     account.check_balance();
-    
+
     // Constants
     const Y: u32 = 100;
     println!("The value of Y is: {}", Y);
     println!("The value of PI is: {}", PI);
-    
+
     // Shadowing
     let x = 5;
     let x = x + 1; // shadows the previous x
@@ -95,7 +94,7 @@ fn main() {
         println!("The value of shadowed x in inner scope is: {}", x);
     }
     println!("The value of shadowed x is: {}", x);
-    
+
     //control flow
     let age: u32 = 18;
     if age >= 18 {
@@ -111,11 +110,11 @@ fn main() {
     } else {
         println!("{} is not divisible by 2 or 4.", number);
     }
-    
+
     let condition = true;
     let number = if condition { 5 } else { 10 };
     println!("number is: {}", number);
-    
+
     // Loops
     // loop{
     // }
@@ -128,12 +127,13 @@ fn main() {
         }
     };
     println!("The result from the loop is: {result}");
-    
+
     let mut count = 0;
-    'counting_up: loop { // label
+    'counting_up: loop {
+        // label
         println!("count = {count}");
         let mut remaining = 10;
-        
+
         loop {
             println!("remaining = {remaining}");
             if remaining == 9 {
@@ -144,25 +144,25 @@ fn main() {
             }
             remaining -= 1;
         }
-        
+
         count += 1;
     }
     println!("End count = {count}");
-    
+
     let mut number = 3;
     while number != 0 {
         println!("{number}!");
         number -= 1;
     }
     println!("LIFTOFF!!!");
-    
+
     let a = [10, 20, 30, 40, 50];
     for element in a {
         println!("the element is: {element}");
     }
 
     //structs
-    let mut user1: User = User{
+    let mut user1: User = User {
         active: true,
         username: String::from("leojiang"),
         email: String::from("leojiang@example.com"),
@@ -178,7 +178,7 @@ fn main() {
             sign_in_count: 1,
         }
     }
-    let user2 = User{
+    let user2 = User {
         email: String::from("another.com"),
         ..user1
     };
@@ -195,9 +195,7 @@ fn main() {
     }
     let four = IpAddrKind::V4;
     let six = IpAddrKind::V6;
-    fn route(ip_kind: IpAddrKind) {
-        
-    }
+    fn route(ip_kind: IpAddrKind) {}
     route(IpAddrKind::V4);
     route(IpAddrKind::V6);
 
@@ -227,9 +225,10 @@ fn main() {
 
     // Error handeling
     // approach 1 | it actually has buit-in Option, to need to define a costum one.
-    enum Option<T> { //Define the gineric Option type
+    enum Option<T> {
+        //Define the gineric Option type
         Some(T), // Represents a value
-        None, // Represents the absence of a value
+        None,    // Represents the absence of a value
     }
 
     fn divide_option(numerator: f64, denominator: f64) -> Option<f64> {
@@ -245,8 +244,9 @@ fn main() {
         Option::None => println!("Error: Division by zero is not allowed."),
     }
     // approach 2
-    enum Result<T, E> { // Define the generic Result type | also built-in
-        Ok(T), // Represents a successful value
+    enum Result<T, E> {
+        // Define the generic Result type | also built-in
+        Ok(T),  // Represents a successful value
         Err(E), // Represents an error value
     }
     fn divide_result(numerator: f64, denominator: f64) -> Result<f64, String> {
@@ -262,8 +262,23 @@ fn main() {
         Result::Err(error) => println!("Error: {}", error),
     }
 
-
-
+    // Vec
+    let mut numbers: Vec<i32> = Vec::new();
+    numbers.push(1);
+    numbers.push(2);
+    let str_vec = vec!["Hello".to_string(), "World".to_string()];
+    for i in 0..str_vec.len() {
+        println!("the element at index {} is: {}", i, str_vec[i]);
+    }
+    let sec: &str = &str_vec[1];
+    let third = str_vec.get(2);
+    match third {
+        Some(value) => println!("the third element in str_vec is: {}", value),
+        None => println!("there is no third element in str_vec"),
+    }
+    println!("the second element in str_vec is: {}", sec);
+    println!("Numbers: {:?}", numbers);
+    println!("String Vector: {:?}", str_vec);
 }
 
 struct Book {
@@ -272,14 +287,14 @@ struct Book {
     pages: u32,
     available: bool,
 }
-    
-struct User{
+
+struct User {
     active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
 }
-    
+
 const PI: f64 = 3.14159;
 
 struct BankAccount {
