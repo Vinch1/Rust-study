@@ -1,6 +1,6 @@
 #![allow(warnings)]
 
-use std::result;
+use std::{collections::HashMap};
 
 fn main() {
     hello_word();
@@ -279,6 +279,29 @@ fn main() {
     println!("the second element in str_vec is: {}", sec);
     println!("Numbers: {:?}", numbers);
     println!("String Vector: {:?}", str_vec);
+
+    // UTF-8
+    let s = "whatever".to_string();
+    let s = String::from("whatever");
+    let mut s = String::from("foo ");
+    s.push_str("bar");
+    println!("The string is now: {}", s);
+
+    let s1 = String::from("Hello, ");
+    let s2 = String::from("Pussy!");
+    let s3 = s1 + &s2;
+    println!("The concatenated string is: {}", s3);
+    
+    // HashMap
+    let mut scores: HashMap<String, u32> = HashMap::new();
+    scores.insert(String::from("mike"), 50);
+    scores.insert(String::from("leo"), 100);
+
+    let mike_score = scores.get("mike").copied().unwrap_or(0);
+
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
 }
 
 struct Book {
