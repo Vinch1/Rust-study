@@ -1,5 +1,5 @@
 #![allow(warnings)]
-
+use studyProject::AveragedCollection;
 use std::time::Duration;
 use std::{collections::HashMap};
 use std::thread;
