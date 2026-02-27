@@ -1,6 +1,9 @@
 #![allow(warnings)]
 
+use std::time::Duration;
 use std::{collections::HashMap};
+use std::thread;
+use std::sync::mpsc;
 
 fn main() {
     hello_word();
@@ -302,6 +305,55 @@ fn main() {
     for (key, value) in &scores {
         println!("{}: {}", key, value);
     }
+
+    //thread
+    let v = vec![1, 2, 3];
+    let handle = thread::spawn(move|| {
+        // for i in 1..10{
+        //     println!("hi number {} from spawned thread", i);
+        //     thread::sleep(Duration::from_millis(1));
+        // }
+        println!("Here's a vector: {:?}", v);
+    });
+    // drop(v);
+    for i in 1..5{
+        println!("hi number {} from main thread", i);
+        thread::sleep(Duration::from_millis(1));    
+    }
+
+    handle.join().unwrap();// blocks the main thread until the spawned thread finishes
+
+    // message passing concurrency: channel
+    let (tx, rx) = mpsc::channel();
+    let tx2 = tx.clone();
+    thread::spawn(move || {
+        let vals = vec![
+            String::from("hi"),
+            String::from("from"),
+            String::from("the"),
+            String::from("thread"),
+        ];
+        for msg in vals {      
+            tx.send(msg).unwrap();
+        }
+    });
+
+    thread::spawn(move || {
+        let vals: Vec<String> = vec![
+            String::from("more"),
+            String::from("msg"),
+            String::from("from1"),
+            String::from("thread1"),
+        ];
+        for msg in vals {      
+            tx2.send(msg).unwrap();
+        }
+    });
+    // let received = rx.recv().unwrap();
+    for received in rx {
+        println!("Got: {}", received);
+    }
+
 }
 
 struct Book {
