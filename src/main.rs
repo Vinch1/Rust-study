@@ -1,5 +1,6 @@
 #![allow(warnings)]
 use studyProject::AveragedCollection;
+use studyProject::{Screen, Button, Draw};
 use std::time::Duration;
 use std::{collections::HashMap};
 use std::thread;
@@ -377,6 +378,39 @@ fn main() {
         handle.join().unwrap();
     }
     println!("Result: {}", *counter.lock().unwrap());
+
+    //Trait
+    struct SelectBox {
+        width: u32,
+        height: u32,
+        options: Vec<String>,
+    }
+
+    impl Draw for SelectBox {
+        fn draw(&self) {
+            // code to actually draw a select box
+            println!("Drawing a select box with options: {:?}", self.options);
+        }
+    }
+    let screen = Screen {
+        components: vec![
+            Box::new(Button {
+                width: 50,
+                height: 10,
+                label: String::from("COOL"),
+            }),
+            Box::new(SelectBox {
+                width: 75,
+                height: 10,
+                options: vec![
+                    String::from("Yes"),
+                    String::from("No"),
+                    String::from("Maybe"),
+                ],
+            }),
+        ],
+    };
+    screen.run();
 
 }
 
