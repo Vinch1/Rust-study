@@ -21,13 +21,21 @@ async fn main() {
 }
 
 async fn run() -> Result<(), Box<dyn Error>> {
+    let initial_log_filter = Config::resolve_rust_log();
+    init_tracing(&initial_log_filter);
+
     let config = Config::from_env();
-    init_tracing(&config.rust_log);
 
     let addr = config.socket_addr();
     let listener = TcpListener::bind(addr).await?;
 
     let state = AppState::new("axum-service", env!("CARGO_PKG_VERSION"));
+    info!(
+        service = state.service_name,
+        version = state.service_version,
+        "application initialized"
+    );
+
     let app = build_router(state);
 
     info!(%addr, "server listening");
