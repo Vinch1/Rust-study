@@ -1,11 +1,11 @@
 #![allow(warnings)]
-use studyProject::AveragedCollection;
-use studyProject::{Screen, Button, Draw};
-use std::time::Duration;
-use std::{collections::HashMap};
-use std::thread;
+use std::collections::HashMap;
 use std::sync::mpsc;
 use std::sync::{Arc, Mutex};
+use std::thread;
+use std::time::Duration;
+use studyProject::AveragedCollection;
+use studyProject::{Button, Draw, Screen};
 
 fn main() {
     hello_word();
@@ -296,7 +296,7 @@ fn main() {
     let s2 = String::from("Pussy!");
     let s3 = s1 + &s2;
     println!("The concatenated string is: {}", s3);
-    
+
     // HashMap
     let mut scores: HashMap<String, u32> = HashMap::new();
     scores.insert(String::from("mike"), 50);
@@ -310,7 +310,7 @@ fn main() {
 
     //thread
     let v = vec![1, 2, 3];
-    let handle = thread::spawn(move|| {
+    let handle = thread::spawn(move || {
         // for i in 1..10{
         //     println!("hi number {} from spawned thread", i);
         //     thread::sleep(Duration::from_millis(1));
@@ -318,12 +318,12 @@ fn main() {
         println!("Here's a vector: {:?}", v);
     });
     // drop(v);
-    for i in 1..5{
+    for i in 1..5 {
         println!("hi number {} from main thread", i);
-        thread::sleep(Duration::from_millis(1));    
+        thread::sleep(Duration::from_millis(1));
     }
 
-    handle.join().unwrap();// blocks the main thread until the spawned thread finishes
+    handle.join().unwrap(); // blocks the main thread until the spawned thread finishes
 
     // message passing concurrency: channel
     let (tx, rx) = mpsc::channel();
@@ -335,7 +335,7 @@ fn main() {
             String::from("the"),
             String::from("thread"),
         ];
-        for msg in vals {      
+        for msg in vals {
             tx.send(msg).unwrap();
         }
     });
@@ -347,7 +347,7 @@ fn main() {
             String::from("from1"),
             String::from("thread1"),
         ];
-        for msg in vals {      
+        for msg in vals {
             tx2.send(msg).unwrap();
         }
     });
@@ -368,7 +368,7 @@ fn main() {
     let mut handles = vec![];
     for _ in 0..10 {
         let counter = Arc::clone(&counter);
-        let handle = thread::spawn(move ||{
+        let handle = thread::spawn(move || {
             let mut num = counter.lock().unwrap();
             *num += 1;
         });
@@ -411,7 +411,6 @@ fn main() {
         ],
     };
     screen.run();
-
 }
 
 struct Book {
